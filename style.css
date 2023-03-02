@@ -24,7 +24,7 @@
     padding: 25px 0 65px;
 }
 
-.nav_show_more div {
+.nav_show_more p {
     width: 255px;
     height: 55px;
     display: flex;
@@ -40,6 +40,7 @@
 .grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(500px);
     align-items: start;
     gap: 20px;
 }
@@ -61,18 +62,18 @@
 .grid-box .image img{
     object-fit: contain;
     object-position: center;
-    max-width: 100%;
+    width: 100%;
     height: 100%;
 }
 
 .product-descr {
     background-color: black;
+    height: 300px;
     color: white;
     padding: 30px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 15px;
+    justify-content: space-between;
 }
 
 .product-descr-title {
@@ -116,4 +117,9 @@
     width: 100%;
     height: 50px;
     cursor: pointer;
+}
+
+.fav_act{
+    background-color: #1F86FF;
+    color: white;
 }
