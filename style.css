@@ -61,7 +61,7 @@
     user-select: none;
 }
 
-.grid-box .image img{
+.grid-box .image img {
     object-fit: contain;
     object-position: center;
     width: 100%;
@@ -121,12 +121,12 @@
     cursor: pointer;
 }
 
-.fav_act{
+.fav_act {
     background-color: #1F86FF;
     color: white;
 }
 
-.cart_menu_wrapper{
+.cart_menu_wrapper {
     position: fixed;
     width: 100%;
     height: 100vh;
@@ -137,7 +137,7 @@
     justify-content: end;
 }
 
-.cart_menu_close_area{
+.cart_menu_close_area {
     position: absolute;
     width: 100%;
     height: 100vh;
@@ -152,7 +152,7 @@
     justify-content: center;
 }
 
-.cart_menu_close_area p{
+.cart_menu_close_area p {
     margin-right: 600px;
     width: 500px;
     text-align: center;
@@ -165,47 +165,106 @@
     transition: all 1.5s ease !important;
 }
 
-.cart_menu{
+.cart_menu {
     width: 600px;
     height: 100vh;
     background-color: black;
     position: relative;
     left: 100%;
     transition: all .8s ease;
-    padding: 30px 10px;
+    padding: 20px 10px;
     z-index: 2;
     color: black;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    align-items: center;
+    gap: 15px;
 }
 
-.cart_menu_act.cart_menu_wrapper{
-    visibility: visible;  
-    opacity: 1;
+.cart_menu_content_body {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
 
-.cart_menu_act .cart_menu{
+.cart_menu_content_body button {
+    width: 100%;
+    height: 80px;
+    font-size: 24px;
+    border-radius: 10px;
+}
+
+.cart_menu_content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    height: 400px;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.cart_menu_content .fog {
+    position: absolute;
+    top: 0;
     left: 0;
+    width: 100px;
+    height: 100px;
+    background-color: red;
 }
 
-.cart_menu_act .cart_menu_close_area{
+.cart_menu_content::-webkit-scrollbar {
+    all: unset;
+    border-top: 2px solid white;
+    border-bottom: 2px solid white;
+    border-right: 2px dashed white;
+    border-left: 2px dashed white;
+}
+
+.cart_menu_content::-webkit-scrollbar-thumb {
+    all: unset;
+    background: linear-gradient(transparent, aqua, transparent);
+    border-radius: 30px;
+    border: 3px outset white;
+}
+
+.cart_menu .title {
+    color: white;
+    font-size: 28px;
+    text-align: center;
+}
+
+.cart_menu_act.cart_menu_wrapper {
     visibility: visible;
     opacity: 1;
 }
 
-.cart_menu_act .cart_menu_close_area p{
+.cart_menu_act .cart_menu {
+    left: 0;
+}
+
+.cart_menu_act .cart_menu_close_area {
+    visibility: visible;
     opacity: 1;
 }
 
-.empty_cart_sign{
+.cart_menu_act .cart_menu_close_area p {
+    opacity: 1;
+}
+
+.empty_cart_sign {
     position: relative;
     width: 100%;
     height: 100%;
     display: block;
 }
 
-.empty_cart_sign .txt{
+.empty_cart_sign .txt {
     font-size: 28px;
     position: absolute;
     top: 50%;
@@ -214,7 +273,7 @@
     color: white;
 }
 
-.empty_cart_sign img{
+.empty_cart_sign img {
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -222,7 +281,7 @@
     opacity: .2;
 }
 
-.cart_product{
+.cart_product {
     display: flex;
     justify-content: space-between;
     gap: 10px;
@@ -233,27 +292,27 @@
     font-size: 18px;
 }
 
-.cart_product_left{
+.cart_product_left {
     display: flex;
     align-items: center;
     gap: 5px;
 }
 
-.cart_product_left img{
+.cart_product_left img {
     width: 80px;
     height: 80px;
     object-fit: contain;
     object-position: center;
 }
 
-.cart_product_right{
+.cart_product_right {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: 5px;
 }
 
-.counter{
+.counter {
     display: flex;
     align-items: center;
     gap: 45px;
@@ -266,19 +325,19 @@
 }
 
 .counter :nth-child(1),
-.counter :nth-child(3){
+.counter :nth-child(3) {
     font-size: 28px;
     cursor: pointer;
 }
 
-.counter_num{
+.counter_num {
     position: absolute;
     top: 50%;
     left: 50%;
     translate: -50% -50%;
 }
 
-.cart_product_price{
+.cart_product_price {
     display: flex;
     align-items: center;
     color: #1F86FF;

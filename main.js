@@ -219,20 +219,21 @@ let arr = [{
         "count": 145
     }
 }]
-let cart = []
-
-let products = document.querySelector('.products')
-let show_first_five = document.querySelector('.show_first_five')
-let show_all = document.querySelector('.show_all')
-let only_womans = document.querySelector('.only_womans')
-let total = document.querySelector('#total')
-let cart_menu = document.querySelector('.cart_menu')
+let cart = [],
+    products = document.querySelector('.products'),
+    show_first_five = document.querySelector('.show_first_five'),
+    show_all = document.querySelector('.show_all'),
+    only_womans = document.querySelector('.only_womans'),
+    total = document.querySelector('#total'),
+    cart_menu_content = document.querySelector('.cart_menu_content'),
+    cart_menu_content_body = document.querySelector('.cart_menu_content_body'),
+    empty_cart_sign = document.querySelector('.empty_cart_sign'),
+    empty_cart_sign_count = 0
 
 
 function reload(data, place) {
     place.innerHTML = ""
     total.innerHTML = cart.length
-
     for (let item of data) {
         let product = document.createElement('div'),
             image = document.createElement('div'),
@@ -242,7 +243,6 @@ function reload(data, place) {
             txt = document.createElement('p'),
             rating = document.createElement('div'),
             price = document.createElement('div'),
-            price_span_$ = document.createElement('span'),
             price_span = document.createElement('span'),
             rate = document.createElement('div'),
             rate_span_star = document.createElement('span'),
@@ -250,7 +250,8 @@ function reload(data, place) {
             count = document.createElement('div'),
             count_span_box = document.createElement('span'),
             count_span = document.createElement('span'),
-            btn_favorite = document.createElement('div')
+            btn_favorite = document.createElement('div'),
+            span = document.createElement('span')
 
         product.classList.add('product', 'grid-box')
         image.classList.add('image')
@@ -259,7 +260,6 @@ function reload(data, place) {
         txt.classList.add('txt')
         rating.classList.add('rating')
         price.classList.add('price')
-        price_span_$.classList.add('material-symbols-outlined')
         rate_span_star.classList.add('material-symbols-outlined')
         count_span_box.classList.add('material-symbols-outlined')
         btn_favorite.classList.add('favorite')
@@ -269,13 +269,13 @@ function reload(data, place) {
 
         product_descr_title.innerHTML = item.title.length >= 20 ? item.title.slice(0, 20) : item.title
         txt.innerHTML = item.description.length >= 100 ? item.description.slice(0, 150) : item.description
-        price_span_$.innerHTML = 'attach_money'
         rate_span_star.innerHTML = 'star'
         count_span_box.innerHTML = 'inventory_2'
         price_span.innerHTML = item.price
         rate_span.innerHTML = item.rating.rate
         count_span.innerHTML = item.rating.count
         btn_favorite.innerHTML = 'В избранное'
+        span.innerHTML = '$'
 
 
         product.append(image)
@@ -285,7 +285,7 @@ function reload(data, place) {
         product_descr.append(txt)
         product_descr.append(rating)
         rating.append(price)
-        price.append(price_span_$)
+        price.append(span)
         price.append(price_span)
         rating.append(rate)
         rate.append(rate_span_star)
@@ -298,16 +298,24 @@ function reload(data, place) {
 
         btn_favorite.onclick = () => {
             if (cart.includes(item.id)) {
-                btn_favorite.classList.remove('fav_act')
                 cart = cart.filter(el => el !== item.id)
-                cartReload(cart, arr, cart_menu)
+                btn_favorite.classList.remove('fav_act')
+                empty_cart_sign_count--
             } else {
                 cart.push(item.id)
                 btn_favorite.classList.add('fav_act')
-                cartReload(cart, arr, cart_menu)
+                empty_cart_sign_count++
             }
             total.innerHTML = cart.length
+            cartReload(cart, arr, cart_menu_content)
 
+            if (empty_cart_sign_count === 0) {
+                empty_cart_sign.style.display = 'block'
+                cart_menu_content_body.style.display = 'none'
+            } else {
+                empty_cart_sign.style.display = 'none'
+                cart_menu_content_body.style.display = 'flex'
+            }
         }
     }
 }
@@ -326,10 +334,8 @@ only_womans.onclick = () => {
             return item
         }
     })
-
     reload(filtered, products)
 }
-
 reload(arr, products)
 
 
@@ -337,7 +343,6 @@ reload(arr, products)
 let cart_menu_wrapper = document.querySelector('.cart_menu_wrapper')
 let cart_menu_btn = document.querySelector('.cart_menu_btn')
 let cart_menu_close_btns = document.querySelectorAll('[data-menu_close]')
-let empty_cart_sign = document.querySelector('.empty_cart_sign')
 
 cart_menu_btn.onclick = () => {
     cart_menu_wrapper.classList.add('cart_menu_act')
@@ -353,16 +358,9 @@ cart_menu_close_btns.forEach(el => {
 
 function cartReload(cart, arr, place) {
     place.innerHTML = ''
-
-    if (cart.length === 0) {
-        empty_cart_sign.style.display = 'block'
-    } else {
-        empty_cart_sign.style.display = 'none'
-    }
-
-    for (let item of cart) {
+    for (let id of cart) {
         for (let item2 of arr) {
-            if (item === item2.id) {
+            if (id === item2.id) {
                 let cart_product = document.createElement('div')
                 let cart_product_left = document.createElement('div')
                 let cart_product_left_img = document.createElement('img')
@@ -373,7 +371,6 @@ function cartReload(cart, arr, place) {
                 let counter_num = document.createElement('span')
                 let counter_minus = document.createElement('span')
                 let cart_product_price = document.createElement('div')
-                let span_$ = document.createElement('span')
 
                 cart_product.classList.add('cart_product')
                 cart_product_left.classList.add('cart_product_left')
@@ -384,7 +381,6 @@ function cartReload(cart, arr, place) {
                 counter_num.classList.add('counter_num')
                 counter_minus.classList.add('minus')
                 cart_product_price.classList.add('cart_product_price')
-                span_$.classList.add('material-symbols-outlined')
 
                 cart_product_left_img.src = item2.image
                 cart_product_left_name.innerHTML = item2.title
@@ -398,6 +394,7 @@ function cartReload(cart, arr, place) {
                     counterNum++
                     counter_num.innerHTML = counterNum
                     cart_product_price.innerHTML = item2.price * counterNum + `  $`
+                    total.innerHTML = cart.length
                 }
                 counter_minus.onclick = () => {
                     counterNum--
@@ -405,12 +402,13 @@ function cartReload(cart, arr, place) {
                     cart_product_price.innerHTML = item2.price * counterNum + `  $`
                     if (counterNum === 0) {
                         cart = cart.filter(el => el !== item2.id)
-                        cartReload(cart, arr, cart_menu)
+                        cartReload(cart, arr, cart_menu_content)
+                        reload(arr, products)
                     }
+                    total.innerHTML = cart.length
                 }
                 // Counter
 
-                span_$.innerHTML = 'attach_money'
                 cart_product_price.innerHTML = item2.price * counterNum + `  $`
 
                 place.append(cart_product)
@@ -423,7 +421,6 @@ function cartReload(cart, arr, place) {
                 counter.append(counter_num)
                 counter.append(counter_plus)
                 cart_product_right.append(cart_product_price)
-                cart_product_price.append(span_$)
             }
         }
     }
